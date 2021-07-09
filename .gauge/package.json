@@ -1,0 +1,15 @@
+{
+  "name": "backend_challenge_automated_tests",
+  "description": "Backend Challenge Automated Tests",
+  "scripts": {
+    "test": "gauge run specs/"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "buffer": "^6.0.3",
+    "form-data": "^4.0.0",
+    "fs": "^0.0.1-security",
+    "moment": "^2.29.1",
+    "util": "^0.12.4"
+  }
+}

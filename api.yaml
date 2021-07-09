@@ -1,0 +1,175 @@
+openapi: 3.0.0
+info:
+  description: InstaPic
+  version: 1.0.0
+  title: InstaPic API
+tags:
+  - name: auth
+    description: Before user can do
+  - name: user
+    description: What user can do
+paths:
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: Register or login user
+      description: Register new user or login existing user, jwt token is returned on successful operation
+      operationId: login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login succeed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '201':
+          description: New user registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        default:
+          $ref: '#/components/schemas/Error'
+  /user/post:
+    post:
+      tags:
+        - 'user'
+      summary: Create a new post
+      operationId: createPost
+      security:
+        - bearerAuth: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - image 
+                - description 
+              properties:
+                image:
+                  type: string
+                  format: binary
+                description:
+                  type: string
+      responses:
+        '200':
+          description: Post created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreatePostResponse'
+        default:
+          $ref: '#/components/schemas/Error'
+    get:
+      tags:
+        - 'user'
+      summary: List posts
+      operationId: listPost
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: username
+          schema:
+            type: string
+          description: filter post posted by username
+        - in: query
+          name: created_at_sort_order
+          schema:
+            type: string
+            default: desc
+            enum:
+            - asc
+            - desc
+      responses:
+        '200':
+          description: Post retrieved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListPostResponse'
+        default:
+          $ref: '#/components/schemas/Error'
+  /user/post/{postID}/image:
+    get:
+      tags:
+        - 'user'
+      summary: Get post image
+      operationId: getPostImage
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: postID
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Base64 encoded image
+          content:
+            plain/text:
+              schema:
+                type: string
+                format: Base64
+        default:
+          $ref: '#/components/schemas/Error'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    LoginRequest:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    LoginResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          description: jwt token for user operations
+    CreatePostResponse:
+      type: object
+      $ref: '#/components/schemas/Post'
+    ListPostResponse:
+      type: object
+      properties:
+        post_list:
+          type: array
+          items:
+            $ref: '#/components/schemas/Post'
+    Post:
+      type: object
+      properties:
+        url:
+          type: string
+          description: url to the post image
+        username:
+          type: string
+        description:
+          type: string
+        created_at:
+          type: string
+          description: created date time
+    Error:
+      type: object
+      properties:
+        ErrorMessage:
+          type: string

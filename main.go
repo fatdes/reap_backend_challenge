@@ -2,9 +2,11 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"time"
 
@@ -22,8 +24,16 @@ func main() {
 	}()
 	router := route.NewRouter()
 
+	port := 8080
+	if portString, found := os.LookupEnv("PORT"); found {
+		newPort, err := strconv.Atoi(portString)
+		if err != nil {
+			log.Fatal(fmt.Sprintf("invalid PORT=%s", portString), err)
+		}
+		port = newPort
+	}
 	ws := &http.Server{
-		Addr:    ":8080",
+		Addr:    fmt.Sprintf(":%d", port),
 		Handler: router,
 	}
 

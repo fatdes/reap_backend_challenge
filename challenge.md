@@ -19,10 +19,10 @@
 
 ## Deliverable
 Please share your repo with us and publish on a platform of your choice (Heroku, AWS, etc). Have a README that documents how to run your source.
-- [ ] Production URL (Heroku, Netlify, etc.)
+- [X] Production URL (Heroku, Netlify, etc.)
 - [X] Source code (Github, Bitbucket, etc.)
-- [ ] Documentation on how to run the source code
-- [ ] Documentation on your API
+- [X] Documentation on how to run the source code
+- [X] Documentation on your API
 
 ## Grading and Submission Requirements
 - Graded based on code quality and test coverage

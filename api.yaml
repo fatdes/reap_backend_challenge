@@ -36,7 +36,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/LoginResponse'
         default:
-          $ref: '#/components/schemas/Error'
+          $ref: '#/components/schemas/ErrorResponse'
   /user/post:
     post:
       tags:
@@ -65,9 +65,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreatePostResponse'
+                $ref: '#/components/schemas/Post'
         default:
-          $ref: '#/components/schemas/Error'
+          $ref: '#/components/schemas/ErrorResponse'
     get:
       tags:
         - 'user'
@@ -97,7 +97,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ListPostResponse'
         default:
-          $ref: '#/components/schemas/Error'
+          $ref: '#/components/schemas/ErrorResponse'
   /user/post/{postID}/image:
     get:
       tags:
@@ -121,7 +121,7 @@ paths:
                 type: string
                 format: Base64
         default:
-          $ref: '#/components/schemas/Error'
+          $ref: '#/components/schemas/ErrorResponse'
 components:
   securitySchemes:
     bearerAuth:
@@ -145,9 +145,6 @@ components:
         token:
           type: string
           description: jwt token for user operations
-    CreatePostResponse:
-      type: object
-      $ref: '#/components/schemas/Post'
     ListPostResponse:
       type: object
       properties:
@@ -168,7 +165,7 @@ components:
         created_at:
           type: string
           description: created date time
-    Error:
+    ErrorResponse:
       type: object
       properties:
         ErrorMessage:

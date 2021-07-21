@@ -58,7 +58,7 @@ func (l *List) ListPost(w http.ResponseWriter, r *http.Request) {
 	postResponseList := make([]*postResponse, len(postList))
 	for i, p := range postList {
 		postResponseList[i] = &postResponse{
-			URL:         fmt.Sprintf("/v1/user/post/%s/iamge", p.ID),
+			URL:         fmt.Sprintf("/v1/user/post/%s/image", p.ID),
 			Username:    p.Username,
 			Description: p.Description,
 			CreatedAt:   p.CreatedAt,

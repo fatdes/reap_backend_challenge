@@ -52,7 +52,7 @@ func (db *PostDBPGX) ListPost(username string, createdAtSortOrder SortOrder) ([]
 	sortOrder := createdAtSortOrder
 
 	rows, err := conn.Query(context.Background(),
-		fmt.Sprintf("SELECT id, username, description, created_at FROM post WHERE username = COALESCE($1, username) ORDER BY created_at %s", sortOrder),
+		fmt.Sprintf("SELECT id, username, description, created_at FROM post WHERE username = COALESCE(NULLIF($1, ''), username) ORDER BY created_at %s", sortOrder),
 		username)
 	if err != nil {
 		return nil, err

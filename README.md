@@ -65,5 +65,5 @@ Example curls
 curl -v http://desmond-reap-backend-challenge.herokuapp.com/v1/auth/login --data "{ \"username\": \"somebody\", \"password\": \"password\" }"
 
 # list posts
-curl -v -H"Authorization: Bearer ${token returned in login}" http://reap-backend-challenge.herokuapp.com/v1/user/post
+curl -v -H"Authorization: Bearer ${token returned in login}" http://desmond-reap-backend-challenge.herokuapp.com/v1/user/post
 ```

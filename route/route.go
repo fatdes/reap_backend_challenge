@@ -23,7 +23,7 @@ func NewRouter() http.Handler {
 	r.Use(middleware.Timeout(60 * time.Second))
 
 	r.Use(cors.Handler(cors.Options{
-		AllowedOrigins:   []string{"http://*"}, // should be configurable instead of allow everyone
+		AllowedOrigins:   []string{"http://*", "https://*"}, // should be configurable instead of allow everyone
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
 		ExposedHeaders:   []string{"Link"},
